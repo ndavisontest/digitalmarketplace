@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Serilog;
 using Serilog.Sinks.PostgreSQL;
@@ -46,7 +47,7 @@ namespace Dta.Marketplace.Subscribers.Logger.Worker {
                     services.AddSingleton<IHostedService, AppService>();
                     services.AddSingleton(typeof(ILoggerAdapter<>),typeof(LoggerAdapter<>));
                     services.AddTransient<IMessageProcessor, MessageProcessor>();
-                    services.AddTransient<ILoggerContext, LoggerContext>();
+                    // services.AddTransient<LoggerContext>();
                     services.Configure<AppConfig>(ac => {
                         ac.AwsSqsAccessKeyId = Environment.GetEnvironmentVariable("AWS_SQS_ACCESS_KEY_ID");
                         ac.AwsSqsQueueUrl = Environment.GetEnvironmentVariable("AWS_SQS_QUEUE_URL");
@@ -56,9 +57,8 @@ namespace Dta.Marketplace.Subscribers.Logger.Worker {
                             ac.AwsSqsRegion = awsSqsRegion;
                         }
                         ac.AwsSqsSecretAccessKey = Environment.GetEnvironmentVariable("AWS_SQS_SECRET_ACCESS_KEY");
-                        ac.BuyerSlackUrl = Environment.GetEnvironmentVariable("BUYER_SLACK_URL");
-                        ac.SupplierSlackUrl = Environment.GetEnvironmentVariable("SUPPLIER_SLACK_URL");// dont need this
-                        ac.UserSlackUrl = Environment.GetEnvironmentVariable("USER_SLACK_URL");// dont need this 
+                        ac.ConnectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+
                         var workIntervalInSeconds = Environment.GetEnvironmentVariable("WORK_INTERVAL_IN_SECONDS");
                         if (string.IsNullOrWhiteSpace(workIntervalInSeconds) == false) {
                             ac.WorkIntervalInSeconds = int.Parse(workIntervalInSeconds);
@@ -73,16 +73,12 @@ namespace Dta.Marketplace.Subscribers.Logger.Worker {
                         if (vcapServicesString != null) {
                             var vcapServices = VcapServices.FromJson(vcapServicesString);
                             var credentials = vcapServices.UserProvided.First().Credentials;
-
                             ac.AwsSqsAccessKeyId = credentials.AwsSqsAccessKeyId;
                             ac.AwsSqsQueueUrl = credentials.AwsSqsQueueUrl;
                             if (string.IsNullOrWhiteSpace(credentials.AwsSqsRegion) == false) {
                                 ac.AwsSqsRegion = credentials.AwsSqsRegion;
                             }
                             ac.AwsSqsSecretAccessKey = credentials.AwsSqsSecretAccessKey;
-                            ac.BuyerSlackUrl = credentials.BuyerSlackUrl;
-                            ac.SupplierSlackUrl = credentials.SupplierSlackUrl;
-                            ac.UserSlackUrl = credentials.UserSlackUrl;
                             if (credentials.WorkIntervalInSeconds != 0) {
                                 ac.WorkIntervalInSeconds = credentials.WorkIntervalInSeconds;
                             }
@@ -91,8 +87,20 @@ namespace Dta.Marketplace.Subscribers.Logger.Worker {
                             }
                             ac.SentryDsn = credentials.SentryDsn;
                             Sentry.SentrySdk.Init(ac.SentryDsn);
+
+                            var postgresCredentials = vcapServices.Postgres.First().Credentials;
+                            ac.ConnectionString = $"Host={postgresCredentials.Host};Port={postgresCredentials.Port};Database={postgresCredentials.DbName};Username={postgresCredentials.Username};Password={postgresCredentials.Password}";
                         }
                      });
+                    var serviceProvider = services.BuildServiceProvider();
+                    var appConfigOptions = serviceProvider.GetService<IOptions<AppConfig>>();
+                    var appConfig = appConfigOptions.Value;
+
+                    services.AddEntityFrameworkNpgsql()
+                            .AddDbContext<LoggerContext>(options => {
+                                options.UseNpgsql(appConfig.ConnectionString);
+                            })
+                            .BuildServiceProvider();
                     });
             await hostBuilder.RunConsoleAsync();
             Log.CloseAndFlush();
