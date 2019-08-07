@@ -16,65 +16,76 @@ namespace Dta.Marketplace.Subscribers.Logger.Worker.Logger.Tests {
     public class LoggerTests {
 
         [Fact]
-        public void Can_log_information_message() {
+        public void Can_Log_Information_Message() {
+
             // Arrange
             var logger = new Mock<ILoggerAdapter<AppService>>();
             var dbSet = new Mock<DbSet<LogEntry>>();
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
-            var options = new DbContextOptionsBuilder<LoggerContext>()
-                        .UseSqlite(connection)
-                        .Options;
+            try {
+                //In-memory database only exists while the connection is open
+                var options = new DbContextOptionsBuilder<LoggerContext>()
+                            .UseSqlite(connection)
+                            .Options;
 
-            using (var context = new LoggerContext(options)) {
-                context.Database.EnsureCreated();
-            }
+                //create schema in the database 
+                using (var context = new LoggerContext(options)) {
+                    context.Database.EnsureCreated();
+                }
 
-            var json = JsonConvert.SerializeObject(new {
-                foo = "bar"
-            });
-
-            // Act
-            using (var context = new LoggerContext(options)) {
-                var messageProcessor = new MessageProcessor(logger.Object, context);
-                messageProcessor.Process(new Message {
-                    Body = json
+                var json = JsonConvert.SerializeObject(new {
+                    foo = "bar"
                 });
-            }
 
-            // Assert
-            using (var context = new LoggerContext(options)) {
-                logger.Verify(l => l.LogInformation(json), Times.Once);
+                // Act
+                using (var context = new LoggerContext(options)) {
+                    var messageProcessor = new MessageProcessor(logger.Object, context);
+                    messageProcessor.Process(new Message {
+                        Body = json
+                    });
+                }
+
+                // Assert
+                using (var context = new LoggerContext(options)) {
+                    logger.Verify(l => l.LogInformation(json), Times.Once);
+                }
+            } finally {
+                connection.Close();
             }
         }
 
 
         [Fact]
-        //this naming convention is allowed for unit testing Needs to be changed 
-        public void Can_log_exception() {
+        public void Can_Log_Exception() {
             // Arrange
             var logger = new Mock<ILoggerAdapter<AppService>>();
             var dbSet = new Mock<DbSet<LogEntry>>();
             var connection = new SqliteConnection("DataSource=:memory:");
             connection.Open();
-            var options = new DbContextOptionsBuilder<LoggerContext>()
-                        .UseSqlite(connection)
-                        .Options;
-            using (var context = new LoggerContext(options)) {
-                context.Database.EnsureCreated();
-            }
-            var json = JsonConvert.SerializeObject(new {
-                foo = ""
-            });
-            
-            //Act
-            using (var context = new LoggerContext(options)) {
-                var messageProcessor = new MessageProcessor(logger.Object, context);
-                messageProcessor.Process(null);
-            }
-            //Assert
-            using (var context = new LoggerContext(options)) {
-                logger.Verify(l => l.LogError(It.IsAny<string>(), It.IsAny<Exception>()), Times.Once);
+            try {
+                var options = new DbContextOptionsBuilder<LoggerContext>()
+                            .UseSqlite(connection)
+                            .Options;
+
+                using (var context = new LoggerContext(options)) {
+                    context.Database.EnsureCreated();
+                }
+                var json = JsonConvert.SerializeObject(new {
+                    foo = ""
+                });
+
+                //Act
+                using (var context = new LoggerContext(options)) {
+                    var messageProcessor = new MessageProcessor(logger.Object, context);
+                    messageProcessor.Process(null);
+                }
+                //Assert
+                using (var context = new LoggerContext(options)) {
+                    logger.Verify(l => l.LogError(It.IsAny<string>(), It.IsAny<Exception>()), Times.Once);
+                }
+            } finally {
+                connection.Close();
             }
         }
     }
