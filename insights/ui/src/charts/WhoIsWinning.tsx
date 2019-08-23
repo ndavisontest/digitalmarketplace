@@ -3,19 +3,20 @@ import React from 'react';
 import '../main.css';
 
 class WhoIsWinning extends React.Component {
-  public chart: React.RefObject<HTMLCanvasElement>;
+  public chartRef: React.RefObject<HTMLCanvasElement>;
+  private chart?: Chart;
 
   constructor(props: {}) {
     super(props);
-    this.chart = React.createRef();
+    this.chartRef = React.createRef();
   }
 
   public componentDidMount() {
-    if (!this.chart.current) {
+    if (!this.chartRef.current) {
       return;
     }
 
-    const chart = new Chart(this.chart.current, {
+    this.chart = new Chart(this.chartRef.current, {
       type: 'horizontalBar',
       options: {
         legend: {
@@ -29,10 +30,11 @@ class WhoIsWinning extends React.Component {
         }],
       },
     });
+    this.chart.update();
   }
   public render() {
     return (
-      <canvas ref={this.chart}></canvas>
+      <canvas ref={this.chartRef}></canvas>
     );
   }
 }

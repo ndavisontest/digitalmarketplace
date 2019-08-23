@@ -17,7 +17,7 @@ const App: React.FC = () => {
       <div className="au-grid">
         <div className="row">
           <div className="col-xs-12">
-            <WhoIsBuying numberOfEntities={288} commonwealthPercentage={48} />
+            <WhoIsBuying />
           </div>
         </div>
         <div className="row">

@@ -6,7 +6,7 @@ const ChartJsTextPlugin: PluginServiceRegistrationOptions = {
         const height = chart.height;
         const ctx = chart.ctx;
         /// @ts-ignore
-        const description = chart.config.description;
+        const description = chart.description;
 
         if (!ctx || !width || !height) {
             return;

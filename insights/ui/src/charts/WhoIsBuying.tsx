@@ -1,76 +1,47 @@
 import Chart from 'chart.js';
 import React from 'react';
 import '../main.css';
-import ChartJsTextPlugin from './ChartJsTextPlugin';
+import CreatePieChart from './Charts';
 
-interface IWhoIsBuyingProps {
-  numberOfEntities: number;
-  commonwealthPercentage: number;
-}
+class WhoIsBuying extends React.Component {
+  private chartRef: React.RefObject<HTMLCanvasElement>;
+  private chart?: Chart;
 
-class WhoIsBuying extends React.Component<IWhoIsBuyingProps> {
-  private chart: React.RefObject<HTMLCanvasElement>;
-
-  constructor(props: IWhoIsBuyingProps) {
+  constructor(props: {}) {
     super(props);
-    this.chart = React.createRef();
+    this.chartRef = React.createRef();
   }
 
   public componentDidMount() {
-    if (!this.chart.current) {
+    if (!this.chartRef.current) {
       return;
     }
 
-    const {
-      numberOfEntities,
-      commonwealthPercentage,
-    } = this.props;
+    this.chart = CreatePieChart(this.chartRef.current);
+    fetch('https://localhost:5001/api/values/')
+      .then(response => response.json())
+      .then(json => {
+        this.chart!.data.datasets!.forEach(ds => {
+          /// @ts-ignore
+          json.whoIsBuying.forEach(wib => ds.data!.push(wib.value));
+        });
 
-    /// @ts-ignore
-    ChartJsTextPlugin.description = {
-      text: `${numberOfEntities} entities have registered, ${commonwealthPercentage}% of which are Commonwealth government`,
-      width: 200,
-    };
+        /// @ts-ignore
+        json.whoIsBuying.forEach(wib => this.chart!.data.labels!.push(wib.label));
+        /// @ts-ignore
+        this.chart.description = {
+          text: json.whoIsBuyingDescription,
+          width: 200,
+        };
+        this.chart!.update();
 
-    const chart = new Chart(this.chart.current, {
-      type: 'pie',
-      plugins: [ChartJsTextPlugin],
-      options: {
-        cutoutPercentage: 50,
-        legend: {
-          position: 'right',
-        },
-      },
-      /// @ts-ignore
-      description: {
-        text: `${numberOfEntities} entities have registered, ${commonwealthPercentage}% of which are Commonwealth government`,
-        width: 200,
-      },
-      data: {
-        labels: [
-          'Corporate Commonwealth Entity',
-          'Non Corporate Commonwealth Entity',
-          'State / Territory',
-          'Local',
-          'Other',
-        ],
-        datasets: [{
-          backgroundColor: [
-            '#8537BF',
-            '#FF89C4',
-            '#37AFF7',
-            '#F2A16A',
-            '#6EA846',
-          ],
-          data: [43, 94, 64, 74, 13],
-        }],
-      },
-    });
+        return Promise.resolve(json);
+      });
   }
   public render() {
     return (
       <div className="chart-container">
-        <canvas ref={this.chart}></canvas>
+        <canvas ref={this.chartRef}></canvas>
       </div>
     );
   }
