@@ -1,6 +1,7 @@
 import Chart from 'chart.js';
 import React from 'react';
 import '../main.css';
+import { CreateHorizontalBarChart } from './Charts';
 
 class TopBuyers extends React.Component {
   public chartRef: React.RefObject<HTMLCanvasElement>;
@@ -16,20 +17,17 @@ class TopBuyers extends React.Component {
       return;
     }
 
-    this.chart = new Chart(this.chartRef.current, {
-      type: 'horizontalBar',
-      options: {
-        legend: {
-          display: false,
-        },
-      },
-      data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-          data: [12, 19, 3, 5, 2, 3],
-        }],
-      },
-    });
+    this.chart = CreateHorizontalBarChart(this.chartRef.current);
+    this.chart!.data!.labels!.push(
+        'National Disability Insurance Agency',
+        'Department of Agriculture and Water Resources',
+        'Depart of Foreign Affairs and Trade',
+        'Department of Jobs and Small Business',
+        'Depart of Finance',
+    );
+    this.chart!.data!.datasets!.forEach(dataset => {
+      dataset.data!.push(13, 9, 8, 8, 7);
+  });
     this.chart.update();
   }
   public render() {

@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 import React from 'react';
 import '../main.css';
-import CreatePieChart from './Charts';
+import { CreatePieChart } from './Charts';
 
 class WhoIsBuying extends React.Component {
   private chartRef: React.RefObject<HTMLCanvasElement>;
@@ -34,8 +34,6 @@ class WhoIsBuying extends React.Component {
           width: 200,
         };
         this.chart!.update();
-
-        return Promise.resolve(json);
       });
   }
   public render() {

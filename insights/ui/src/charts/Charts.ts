@@ -1,7 +1,7 @@
 import Chart from 'chart.js';
 import ChartJsTextPlugin from './ChartJsTextPlugin';
 
-const CreatePieChart = (canvas: HTMLCanvasElement): Chart => (
+export const CreatePieChart = (canvas: HTMLCanvasElement): Chart => (
     new Chart(canvas, {
         type: 'pie',
         plugins: [ChartJsTextPlugin],
@@ -27,4 +27,35 @@ const CreatePieChart = (canvas: HTMLCanvasElement): Chart => (
     })
 );
 
-export default CreatePieChart;
+
+export const CreateHorizontalBarChart = (canvas: HTMLCanvasElement): Chart => (
+    new Chart(canvas, {
+        type: 'horizontalBar',
+        options: {
+            legend: {
+                display: false,
+                position: 'right',
+            },
+            scales: {
+              xAxes: [{
+                ticks: {
+                  beginAtZero: true,
+                },
+              }],
+            },
+        },
+        data: {
+            labels: [],
+            datasets: [{
+                backgroundColor: [
+                    '#8537BF',
+                    '#FF89C4',
+                    '#37AFF7',
+                    '#F2A16A',
+                    '#6EA846',
+                ],
+                data: [],
+            }],
+        },
+    })
+);
