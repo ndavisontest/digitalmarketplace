@@ -17,8 +17,3 @@ storiesOf('Button', module)
       </span>
     </Button>
   ));
-
-storiesOf('TextInput', module)
-  .add('with text', () => (
-    <TextInput></TextInput>
-  ));
