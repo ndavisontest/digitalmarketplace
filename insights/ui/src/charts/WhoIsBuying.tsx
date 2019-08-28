@@ -18,7 +18,7 @@ class WhoIsBuying extends React.Component {
     }
 
     this.chart = CreatePieChart(this.chartRef.current);
-    fetch('https://localhost:5001/api/values/')
+    fetch('/api/values/')
       .then(response => response.json())
       .then(json => {
         this.chart!.data.datasets!.forEach(ds => {

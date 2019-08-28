@@ -2,6 +2,7 @@
   "name": "ui",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://localhost:3000/insights/",
   "dependencies": {
     "@gov.au/body": "^2.2.0",
     "@gov.au/card": "^0.3.2",
@@ -23,6 +24,7 @@
     "tslint": "^5.18.0",
     "typescript": "3.5.3"
   },
+  "proxy": "http://localhost:5000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

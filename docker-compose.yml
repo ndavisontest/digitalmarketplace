@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+
+  lighttpd:
+    image: sebp/lighttpd
+    volumes:
+      - ~/dm/docker/lighttpd:/var/www/localhost/htdocs
+      - ./lighttpd:/etc/lighttpd
+    ports:
+      - "8000:80"
