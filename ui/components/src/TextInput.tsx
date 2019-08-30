@@ -19,8 +19,8 @@ interface FormValues{
 const TextInput = (props: OtherProps & FormikProps<FormValues>) =>{
   return (
     <Form>
-      <h1>Text</h1>
-       <label htmlFor="text-input" >SOME TEXT</label>
+      <h1>About</h1>
+       <label htmlFor="text-input" >Title</label>
        <AUtextInput id="text-input" />
     </Form>
   );
