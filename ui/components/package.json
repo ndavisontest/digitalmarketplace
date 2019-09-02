@@ -49,14 +49,23 @@
     },
     "react": {
       "location": "pancake/react/"
+    },
+    "js": {
+      "minified": true,
+      "modules": false,
+      "location": "pancake/js/",
+      "name": "pancake.min.js"
     }
   },
   "dependencies": {
+    "@gov.au/accordion": "^7.0.8",
+    "@gov.au/pancake-sass": "^2.3.7",
     "@gov.au/text-inputs": "^2.1.2",
     "@types/react": "^16.9.2",
     "@types/yup": "^0.26.23",
     "eslint": "^6.2.2",
     "formik": "^1.5.8",
+    "framer": "^1.1.0",
     "react": "^16.9.0",
     "react-scripts": "^3.1.1",
     "storybook": "^1.0.0",
