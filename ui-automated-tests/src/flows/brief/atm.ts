@@ -2,7 +2,7 @@ import { format } from "date-fns";
 import * as utils from "../../utils";
 
 export interface ICriteriaItem {
-  criteria: string;
+  criterion: string;
   weighting: string;
 }
 
@@ -44,12 +44,12 @@ const fillAbout = async (title: string, locations: string[]) => {
   await utils.matchText("li", "Enter a summary of your brief");
   await utils.matchText("li", "You must select at least one location");
   await utils.type("title", { value: title });
-  await utils.type("organisation", { numberOfCharacters: 100 });
-  await utils.type("summary", { numberOfWords: 150 });
+  await utils.type("organisation", { numberOfCharacters: 150 });
+  await utils.type("summary", { numberOfWords: 200 });
 
-  locations.forEach(async (location) => {
+  for (const location of locations) {
     await utils.selectCheck(location);
-  });
+  }
 
   await clickSaveContinue();
 };
@@ -79,7 +79,7 @@ const fillObjectives = async () => {
   await utils.type("outcome", { numberOfWords: 500 });
   await utils.type("endUsers", { numberOfWords: 500 });
   await utils.type("workAlreadyDone", { numberOfWords: 500 });
-  await utils.type("industryBriefing", { numberOfWords: 500 });
+  await utils.type("industryBriefing", { numberOfWords: 150 });
   await utils.upload("file_0", "document.pdf");
   await clickSaveContinue();
 };
@@ -97,7 +97,7 @@ const fillResponseCriteria = async (numberOfCriteria: number): Promise<ICriteria
   await clickSaveContinue();
   await utils.matchText("li", "You must not have any empty criteria.");
   await utils.selectCheck("yes");
-  const criteria = [];
+  const criteria: ICriteriaItem[] = [];
   for (let i = 0; i < numberOfCriteria; i += 1) {
     if (i > 0) {
       // eslint-disable-next-line no-await-in-loop
@@ -140,10 +140,10 @@ const create = async (params: IAtmParams): Promise<IAtmResult> => {
   await createBrief();
   await fillWhoCanRespond();
   await fillAbout(params.title, params.locations);
+  const criteria = await fillResponseCriteria(params.numberOfCriteria ? params.numberOfCriteria : 2);
   await fillResponseFormats();
   await fillObjectives();
   await fillTimeframes();
-  const criteria = await fillResponseCriteria(params.numberOfCriteria ? params.numberOfCriteria : 2);
   await fillClosingDate();
   await publishBrief();
   return {
