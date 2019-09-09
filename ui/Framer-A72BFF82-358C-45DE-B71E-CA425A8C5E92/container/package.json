@@ -15,6 +15,8 @@
 	},
 	"author": "Reshma Abraham",
 	"dependencies": {
+		"@gov.au/control-input": "^3.0.1",
+		"@gov.au/headings": "^2.0.11",
 		"classnames": "^2.2.6",
 		"formik": "^1.5.8",
 		"react": "^16.9.0",
@@ -22,5 +24,42 @@
 		"yup": "^0.27.0"
 	},
 	"name": "@framer/resh.test",
-	"version": "1.1.0"
+	"version": "1.1.0",
+	"pancake": {
+		"auto-save": true,
+		"plugins": true,
+		"ignore": [],
+		"json": {
+			"enable": false,
+			"location": "pancake/",
+			"name": "pancake",
+			"content": {
+				"name": true,
+				"version": true,
+				"dependencies": true,
+				"path": true,
+				"settings": true
+			}
+		},
+		"css": {
+			"minified": true,
+			"modules": false,
+			"browsers": [
+				"last 2 versions",
+				"ie 8",
+				"ie 9",
+				"ie 10"
+			],
+			"location": "pancake/css/",
+			"name": "pancake.min.css"
+		},
+		"sass": {
+			"modules": false,
+			"location": "pancake/sass/",
+			"name": "pancake.scss"
+		},
+		"react": {
+			"location": "pancake/react/"
+		}
+	}
 }

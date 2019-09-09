@@ -9,7 +9,6 @@ const style: React.CSSProperties = {
     textAlign: "center",
     color: "#09F",
     overflow: "hidden",
-    fontWeight: "bold",
 }
 
 interface Props {
