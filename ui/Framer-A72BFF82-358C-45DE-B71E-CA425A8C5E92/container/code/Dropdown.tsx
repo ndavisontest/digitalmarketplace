@@ -2,6 +2,7 @@ import * as React from "react"
 import { PropertyControls, ControlType } from "framer"
 import { AUcheckbox } from "@gov.au/control-input"
 import AUheading from "@gov.au/headings"
+import AUaccordion from '@gov.au/accordion';
 
 
 const style: React.CSSProperties = {
@@ -21,12 +22,12 @@ interface Props {
     radius: number
 }
 
-export class Dropdown extends React.Component<Props> {
+export class Filter extends React.Component<Props> {
     static defaultProps = {
         text: "Open to selected",
         fill: "#FFFFFF",
         radius: 100,
-        width: 150,
+        width: 1500,
         height: 50,
     }
 
@@ -44,28 +45,16 @@ export class Dropdown extends React.Component<Props> {
                     background: this.props.fill,
                 }}
             >
-                <AUheading size="sm" level="3">
-                    Type of opporunity
-                </AUheading><AUcheckbox label="Seek and Proposols" name="checkbox-ex" id="cb-phone" block />
-                <AUcheckbox label="Specialists" name="checkbox-ex" id="cb-tablet" block  />
-                <AUcheckbox label="Ask the market" name="checkbox-ex" id="cb-laptop" block  />
-                <AUcheckbox label="Training" name="checkbox-ex" id="cb-laptop" block  />
+            <AUaccordion header="Type">
+                    <AUheading size="sm" level="3">
+                    Type of opportunity
+                    </AUheading>
+                    <AUcheckbox label="Seek and Proposols" name="checkbox-ex" id="cb-phone" block />
+                    <AUcheckbox label="Specialists" name="checkbox-ex" id="cb-tablet" block  />
+                    <AUcheckbox label="Ask the market" name="checkbox-ex" id="cb-laptop" block  />
+                    <AUcheckbox label="Training" name="checkbox-ex" id="cb-laptop" block  />
+            </AUaccordion>
             </div>
         )
     }
 }
-
-// export function Filter({defaultEnabled}) {
-//     const [enabled, setEnabled] = React.useState(defaultEnabled); //dynamic default
-
-//     return (
-//       <div
-//         className={"Filter " + (enabled ? "on" : "off")}
-//         //onClick={setEnabled(!enabled)}
-//       >
-//         <div className="Filter_inner">
-
-//         </div>
-//       </div>
-//     );
-//   }
