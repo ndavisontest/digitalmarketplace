@@ -3,7 +3,7 @@ import * as React from "react"
 import { PropertyControls, ControlType } from "framer"
 
 
-
+// //selected 
 // background: #E8F5FA;
 // border-radius: 100px;
 // font-family: Helvetica;
@@ -14,6 +14,26 @@ import { PropertyControls, ControlType } from "framer"
 // line-height: 26px;
 
 
+//open to all
+// background: #E6EFC2;
+// border-radius: 100px;
+// font-family: Helvetica;
+// font-size: 13px;
+// color: #313131;
+// letter-spacing: 0;
+// text-align: center;
+// line-height: 26px;
+
+// //all 
+// background: #E6EFC2;
+// border-radius: 100px;
+// font-family: Helvetica;
+// font-size: 13px;
+// color: #313131;
+// letter-spacing: 0;
+// text-align: center;
+// line-height: 26px;
+
 const style: React.CSSProperties = {
     height: "100%",
     display: "flex",
@@ -22,7 +42,6 @@ const style: React.CSSProperties = {
     textAlign: "center",
     color: "#313131",
     overflow: "hidden",
-    fontWeight: "bold",
     letterSpacing: "0",
     fontSize: "13px",
     fontFamily: "Helvetica",
