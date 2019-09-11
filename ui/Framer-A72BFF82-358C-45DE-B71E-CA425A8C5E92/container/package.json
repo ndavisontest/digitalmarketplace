@@ -16,6 +16,8 @@
 	"author": "Reshma Abraham",
 	"dependencies": {
 		"@gov.au/accordion": "^7.0.8",
+		"@gov.au/buttons": "^3.0.7",
+		"@gov.au/callout": "^3.0.2",
 		"@gov.au/card": "^0.3.2",
 		"@gov.au/control-input": "^3.0.1",
 		"@gov.au/headings": "^2.0.11",
