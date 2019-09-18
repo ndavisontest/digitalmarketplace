@@ -18,12 +18,11 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "node_modules",
-    "paths": {
-      "*": ["@gov.au/*"]
-    }
+    "baseUrl": "node_modules"
   },
   "include": [
-    "src"
+    "src",
+    "stories/index.js",
+    "src/react-app-env.d.ts"
   ]
 }
