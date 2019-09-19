@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Field, Form, ErrorMessage, FieldProps } from "formik";
 import AUtextInput from '@gov.au/text-inputs';
 
 
@@ -13,7 +13,9 @@ class TextField extends React.Component<ITextFieldProps> {
         return (
             <React.Fragment>
                 <label htmlFor={this.props.id}>{this.props.label}</label>
-                <AUtextInput id={this.props.id} block />
+                <Field name={this.props.id} render={(field: FieldProps) => (
+                    <AUtextInput {...field} id={this.props.id} block />
+                )}/>
             </React.Fragment>
         )
     }

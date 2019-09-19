@@ -6,6 +6,7 @@ import { linkTo } from '@storybook/addon-links';
 import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 import { Button, Welcome } from '@storybook/react/demo';
 import TextField from "../src/fields/TextField";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -22,6 +23,7 @@ storiesOf('Button', module)
 
 storiesOf('TextField', module)
   .add('with text', () => (
-    <TextField id={text('Id', 'textfieldId')} label={text('Label', 'Hello Storybook')}></TextField>
-  
+    <Formik render={() => (
+      <TextField id={text('Id', 'textfieldId')} label={text('Label', 'Hello Storybook')}></TextField>
+    )}/>
   ));
