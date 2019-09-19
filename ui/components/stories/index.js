@@ -3,9 +3,10 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { action } from '@storybook/addon-actions';
 import { linkTo } from '@storybook/addon-links';
-
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 import { Button, Welcome } from '@storybook/react/demo';
-import TextInput from "../src/TextInput";
+import TextField from "../src/fields/TextField";
+
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
 
@@ -19,7 +20,8 @@ storiesOf('Button', module)
     </Button>
   ));
 
-  storiesOf('TextInput', module)
+storiesOf('TextField', module)
   .add('with text', () => (
-    <TextInput></TextInput>
+    <TextField id={text('Id', 'textfieldId')} label={text('Label', 'Hello Storybook')}></TextField>
+  
   ));
