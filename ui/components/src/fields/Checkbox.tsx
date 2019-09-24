@@ -8,6 +8,8 @@ export interface ICheckboxFieldProps {
 
 }
 
+    //"resolveJsonModule": true, add in tsconfig line 16
+
 class Checkbox extends React.Component<ICheckboxFieldProps> {
     render() {
         return (
