@@ -59,6 +59,7 @@
   },
   "dependencies": {
     "@gov.au/accordion": "^7.0.8",
+    "@gov.au/control-input": "^3.0.1",
     "@gov.au/pancake-sass": "^2.3.7",
     "@gov.au/text-inputs": "^2.1.2",
     "@types/yup": "^0.26.24",
@@ -71,6 +72,7 @@
     "storybook": "^1.0.0",
     "styled-components": "^4.3.2",
     "typescript": "^3.6.3",
+    "typescript-eslint": "0.0.1-alpha.0",
     "wrapper": "^0.1.0",
     "yup": "^0.27.0"
   },
