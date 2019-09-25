@@ -34,5 +34,4 @@ storiesOf('TextField', module)
     <Formik render={() => (
       <Checkbox id={text('Id', 'checkboxId')} label={text('Label', 'Hello Storybook')}></Checkbox>
     )}/>
-    
   ));
