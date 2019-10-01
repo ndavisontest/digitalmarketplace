@@ -5,6 +5,10 @@ import AUtextInput from '@gov.au/text-inputs';
 export interface ITextFieldProps {
     name: string;
     label: string;
+    description: string;
+    prefix: string;
+    postfix: string;
+    maxCharacters: number;
 }
 
 const TextField = (props: ITextFieldProps) => {
@@ -12,14 +16,16 @@ const TextField = (props: ITextFieldProps) => {
 
     return (
         <>
-            <label>
-                {props.label}
-                <AUtextInput
-                    {...field}
-                    {...props}
-                    status={meta.touched && meta.error ? 'invalid' : meta.touched ? 'valid' : ''}
-                />
-            </label>
+            <label htmlFor={`id-${props.name}`}>{props.label}</label>
+            <p>{props.description}</p>
+            {props.prefix}
+            <AUtextInput
+                id={`id-${props.name}`}
+                {...field}
+                {...props}
+                status={meta.touched && meta.error ? 'invalid' : meta.touched ? 'valid' : ''}
+            />
+            {props.postfix}
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}

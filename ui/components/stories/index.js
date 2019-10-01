@@ -43,7 +43,13 @@ storiesOf('TextField', module)
       }}>
         {({ errors, touched }) => (
       <Form>
-        <TextField name="name" label={text('Label', 'Name')} ></TextField>
+        <TextField
+          name="name"
+          description={text('Description', 'descriptive text')}
+          label={text('Label', 'Name')}
+          prefix={text('Prefix', 'prefix')}
+          postfix={text('Postfix', 'postfix')}
+        />
         {/* <Field name="name"
           render={({ field }) => (
             <AUtextInput {...field} placeholder="name" />
