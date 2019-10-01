@@ -2,17 +2,18 @@ import * as React from "react";
 import { useField } from "formik";
 import AUtextInput from '@gov.au/text-inputs';
 
+export interface ITextFieldProps {
+    name: string;
+    label: string;
+}
 
-const TextField = ({
-    label,
-    ...props
-}) => {
-    const [field, meta] = useField(props);
+const TextField = (props: ITextFieldProps) => {
+    const [field, meta] = useField(props.name);
 
     return (
         <>
             <label>
-                {label}
+                {props.label}
                 <AUtextInput
                     {...field}
                     {...props}
