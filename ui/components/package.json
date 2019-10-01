@@ -64,7 +64,7 @@
     "@gov.au/text-inputs": "^2.1.2",
     "@types/yup": "^0.26.24",
     "eslint": "^6.4.0",
-    "formik": "^1.5.8",
+    "formik": "^2.0.1-rc.13",
     "framer": "^1.1.3",
     "react": "^16.9.0",
     "react-native": "^0.60.5",

@@ -34,7 +34,7 @@ storiesOf('TextField', module)
   .add('with text', () => (
     <Formik
       initialValues={{
-        name: 'a'
+        name: ''
       }}
       validationSchema={TestSchema}
       onSubmit={values => {
