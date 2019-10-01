@@ -7,6 +7,8 @@ import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 import { Button, Welcome } from '@storybook/react/demo';
 import TextField from "../src/fields/TextField";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+import AUtextInput from '@gov.au/text-inputs';
+import * as Yup from "yup";
 
 
 storiesOf('Welcome', module).add('to Storybook', () => <Welcome showApp={linkTo('Button')} />);
@@ -21,9 +23,35 @@ storiesOf('Button', module)
     </Button>
   ));
 
+const TestSchema = Yup.object().shape({
+  name: Yup.string()
+    .min(2, 'Too Short!')
+    .max(70, 'Too Long!')
+    .required('Required')
+});
 storiesOf('TextField', module)
   .add('with text', () => (
-    <Formik render={() => (
-      <TextField id={text('Id', 'textfieldId')} label={text('Label', 'Hello Storybook')}></TextField>
-    )}/>
+    <Formik
+      initialValues={{
+        name: 'a'
+      }}
+      validationSchema={TestSchema}
+      onSubmit={values => {
+        // same shape as initial values
+        console.log('onSubmit', values);
+      }}>
+        {({ errors, touched }) => (
+      <Form>
+        <TextField name="name" label={text('Label', 'Name')} ></TextField>
+        {/* <Field name="name"
+          render={({ field }) => (
+            <AUtextInput {...field} placeholder="name" />
+          )} />
+
+      <ErrorMessage name="name" /> */}
+        <button type="submit">Submit</button>
+      </Form>
+        )}
+    </Formik>
+
   ));
