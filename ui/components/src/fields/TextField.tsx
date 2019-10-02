@@ -11,6 +11,7 @@ export interface ITextFieldProps {
     postfix: string;
     maxCharacters: number;
     disabled: boolean;
+    type: string;
 }
 
 const TextField = (props: ITextFieldProps) => {
@@ -50,6 +51,8 @@ const TextField = (props: ITextFieldProps) => {
                                         field.onChange(e);
                                         setCharacterCount(e.target.value.length)
                                     }}
+                                    type={props.type}
+                                    disabled={props.disabled}
                                     block
                                 />
                             </div>
