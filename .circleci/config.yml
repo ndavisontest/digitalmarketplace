@@ -109,6 +109,8 @@ jobs:
       - checkout
       - npm_build:
           path: "ui-automated-tests"
+      - npm_build:
+          path: "ui/components"
       - persist_to_workspace:
           root: .
           paths:
