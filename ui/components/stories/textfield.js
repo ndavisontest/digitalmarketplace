@@ -16,24 +16,43 @@ const TestSchema = Yup.object().shape({
   });
 
 storiesOf('TextField', module)
-.add('with text', () => (
-  <Formik
-    initialValues={{
-      name: ''
-    }}
-    validationSchema={TestSchema}
-    onSubmit={action('form-submitted')}>
-    <Form>
-      <TextField
-        name="name"
-        description={text('Description', 'descriptive text')}
-        label={text('Label', 'Name')}
-        prefix={text('Prefix', 'prefix')}
-        postfix={text('Postfix', 'postfix')}
-        maxCharacters={number('Max characters', 10)}
-      />
-      <button className="btn" type="submit">Submit</button>
-    </Form>
-  </Formik>
-
+.add('full', () => (
+    <Formik
+        initialValues={{
+            name: ''
+        }}
+        validationSchema={TestSchema}
+        onSubmit={action('form-submitted')}>
+        <Form>
+            <TextField
+                name="name"
+                description={text('Description', 'descriptive text')}
+                label={text('Label', 'Name')}
+                prefix={text('Prefix', 'prefix')}
+                postfix={text('Postfix', 'postfix')}
+                maxCharacters={number('Max characters', 10)}
+            />
+            <button className="btn" type="submit">Submit</button>
+        </Form>
+    </Formik>
+))
+.add('minimum', () => (
+    <Formik
+        initialValues={{
+            name: ''
+        }}
+        validationSchema={TestSchema}
+        onSubmit={action('form-submitted')}>
+        <Form>
+            <TextField
+                name="name"
+                description={text('Description', undefined)}
+                label={text('Label', 'Name')}
+                prefix={text('Prefix', undefined)}
+                postfix={text('Postfix', undefined)}
+                maxCharacters={number('Max characters', undefined)}
+            />
+            <button className="btn" type="submit">Submit</button>
+        </Form>
+    </Formik>
 ));
