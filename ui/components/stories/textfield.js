@@ -2,6 +2,7 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { text, number } from '@storybook/addon-knobs';
+import { withActions, action } from '@storybook/addon-actions';
 import TextField from "../src/fields/TextField";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -21,11 +22,7 @@ storiesOf('TextField', module)
       name: ''
     }}
     validationSchema={TestSchema}
-    onSubmit={values => {
-      // same shape as initial values
-      console.log('onSubmit', values);
-    }}>
-      {({ errors, touched }) => (
+    onSubmit={action('form-submitted')}>
     <Form>
       <TextField
         name="name"
@@ -35,9 +32,8 @@ storiesOf('TextField', module)
         postfix={text('Postfix', 'postfix')}
         maxCharacters={number('Max characters', 10)}
       />
-      <button type="submit">Submit</button>
+      <button className="btn" type="submit">Submit</button>
     </Form>
-      )}
   </Formik>
 
 ));

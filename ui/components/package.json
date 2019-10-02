@@ -60,6 +60,7 @@
   "dependencies": {
     "@gov.au/accordion": "^7.0.8",
     "@gov.au/control-input": "^3.0.1",
+    "@gov.au/grid-12": "^2.1.0",
     "@gov.au/pancake-sass": "^2.3.7",
     "@gov.au/text-inputs": "^2.1.2",
     "@types/yup": "^0.26.24",
