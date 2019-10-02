@@ -13,7 +13,7 @@ export interface ITextFieldProps {
 
 const TextField = (props: ITextFieldProps) => {
     const [field, meta] = useField(props.name);
-
+    const [characterCount, setCharacterCount] = React.useState(field.value.length)
     return (
         <>
             <label htmlFor={`id-${props.name}`}>{props.label}</label>
@@ -21,11 +21,18 @@ const TextField = (props: ITextFieldProps) => {
             {props.prefix}
             <AUtextInput
                 id={`id-${props.name}`}
+                status={meta.touched && meta.error ? 'invalid' : meta.touched ? 'valid' : ''}
                 {...field}
                 {...props}
-                status={meta.touched && meta.error ? 'invalid' : meta.touched ? 'valid' : ''}
+                onChange={(e: any) => {
+                    field.onChange(e);
+                    setCharacterCount(e.target.value.length)
+                }}
             />
             {props.postfix}
+            {props.maxCharacters &&
+                <div>{characterCount} of {props.maxCharacters}</div>
+            }
             {meta.touched && meta.error ? (
                 <div className="error">{meta.error}</div>
             ) : null}

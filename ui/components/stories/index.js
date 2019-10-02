@@ -24,45 +24,6 @@ storiesOf('Button', module)
     </Button>
   ));
 
-const TestSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, 'Too Short!')
-    .max(70, 'Too Long!')
-    .required('Required')
-});
-storiesOf('TextField', module)
-  .add('with text', () => (
-    <Formik
-      initialValues={{
-        name: ''
-      }}
-      validationSchema={TestSchema}
-      onSubmit={values => {
-        // same shape as initial values
-        console.log('onSubmit', values);
-      }}>
-        {({ errors, touched }) => (
-      <Form>
-        <TextField
-          name="name"
-          description={text('Description', 'descriptive text')}
-          label={text('Label', 'Name')}
-          prefix={text('Prefix', 'prefix')}
-          postfix={text('Postfix', 'postfix')}
-        />
-        {/* <Field name="name"
-          render={({ field }) => (
-            <AUtextInput {...field} placeholder="name" />
-          )} />
-
-      <ErrorMessage name="name" /> */}
-        <button type="submit">Submit</button>
-      </Form>
-        )}
-    </Formik>
-
-  ));
-
   storiesOf('Checkbox', module)
   .add('checkbox component', () => (
     <Formik render={() => (
