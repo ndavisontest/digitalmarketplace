@@ -8,13 +8,13 @@ const App: React.FC = () => {
         <div className="row">
           <div className="col-xs-12">
             <h2 className="au-display-xl">Opportunities</h2>
-            <p>
+            {/* <p>
               Example paragraph. <a href="#">Internal link</a> and an <a href="#" rel="external">external link</a>.
             </p>
             <hr />
             <p>
               Lorem, Web Content Accessibility Guidelines (WCAG) ipsum dolor sit amet consectetur adipisicing elit.
-            </p>
+            </p> */}
           </div>
         </div>
       </div>
