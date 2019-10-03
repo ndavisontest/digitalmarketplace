@@ -1,0 +1,8 @@
+{
+    "azureFunctions.deploySubpath": "insights/functions",
+    "azureFunctions.projectLanguage": "C#Script",
+    "azureFunctions.projectRuntime": "~2",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "publish",
+    "azureFunctions.templateFilter": "Verified"
+}
