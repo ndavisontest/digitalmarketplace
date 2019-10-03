@@ -1,8 +1,8 @@
-import { expect } from "chai";
-import { ElementHandle } from "puppeteer";
+import { expect } from 'chai';
+import { ElementHandle } from 'puppeteer';
 // @ts-ignore: TS1202
-import randomWords = require("random-words");
-import Global from "./global";
+import randomWords = require('random-words');
+import Global from './global';
 
 export const getElementHandles = async (xpath: string): Promise<ElementHandle[]> => {
   await Global.page.waitFor(xpath);
@@ -28,24 +28,24 @@ export const getElementHandle = async (xpath: string): Promise<ElementHandle> =>
 
 export const selectCheck = async (value: string, attribute?: string) => {
   if (!attribute) {
-    attribute = "value";
+    attribute = 'value';
   }
   console.log(`Selecting check box "//input[@${attribute}="${value}"]"`);
   const radio = await this.getElementHandle(`//input[@${attribute}="${value}"]`);
-  await radio.press("Space");
+  await radio.press('Space');
 };
 
 export const selectRadio = async (value: string, attribute?: string) => {
   if (!attribute) {
-    attribute = "value";
+    attribute = 'value';
   }
   console.log(`Selecting radio "//input[@${attribute}="${value}"]"`);
   const radio = await this.getElementHandle(`//input[@${attribute}="${value}"]`);
-  await radio.press("Space");
+  await radio.press('Space');
 };
 
 const words = (numberOfWords: number, numberOfCharacters: number): string => {
-  let text = randomWords({ exactly: numberOfWords }).join(" ");
+  let text = randomWords({ exactly: numberOfWords }).join(' ');
 
   if (numberOfCharacters) {
     text = text.substring(0, numberOfCharacters - 1);
@@ -61,14 +61,14 @@ export const type = async (id: string, options: {
   console.log(`Typing in "//*[@id="${id}"]"`);
   let { value, numberOfWords } = options;
   const { numberOfCharacters } = options;
-  if (value !== "" && !value) {
+  if (value !== '' && !value) {
     if (numberOfCharacters) {
       numberOfWords = numberOfCharacters;
     }
     value = words(numberOfWords, numberOfCharacters);
   }
   const input = await this.getElementHandle(`//*[@id="${id}"]`);
-  if (process.env.SHORTEN_TYPED_INPUT === "true") {
+  if (process.env.SHORTEN_TYPED_INPUT === 'true') {
     if (value.length > 50) {
       value = value.substring(0, 50);
       console.log(`Shortened typed value to "${value}"`);
@@ -109,7 +109,7 @@ export const clickLink = async (linkText: string, isUrl?: boolean) => {
   } else {
     links = await this.getElementHandles(`//a[.="${linkText}"]`);
   }
-  if (process.env.IGNORE_MULTIPLE_LINKS !== "true") {
+  if (process.env.IGNORE_MULTIPLE_LINKS !== 'true') {
     expect(links.length).to.equal(1, `Number of links found for "${linkText}"=${links.length}`);
   } else if (links.length > 1) {
     console.warn(`Number of links found for "${linkText}"=${links.length}`);

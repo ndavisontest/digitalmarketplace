@@ -1,4 +1,4 @@
-import { Browser, Page } from "puppeteer";
+import { Browser, Page } from 'puppeteer';
 
 export default class Global {
   public static page: Page = null;

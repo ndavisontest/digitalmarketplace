@@ -17,7 +17,8 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "preserve",
-    "baseUrl": "node_modules"
+    "baseUrl": "node_modules",
+    "resolveJsonModule": true
   },
   "include": [
     "src",

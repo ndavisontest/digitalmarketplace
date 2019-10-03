@@ -1,9 +1,9 @@
-import { launch, LaunchOptions } from "puppeteer";
-import Global from "../global";
+import { launch, LaunchOptions } from 'puppeteer';
+import Global from '../global';
 
 // puppeteer options
 const opts: LaunchOptions = {
-  headless: process.env.HEADLESS !== "false",
+  headless: process.env.HEADLESS !== 'false',
   slowMo: process.env.SLOW_MO ? parseInt(process.env.SLOW_MO, 10) : undefined,
 };
 

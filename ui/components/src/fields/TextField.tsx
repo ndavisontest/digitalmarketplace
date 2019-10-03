@@ -1,6 +1,6 @@
-import * as React from "react";
-import { useField } from "formik";
 import AUtextInput from '@gov.au/text-inputs';
+import { useField } from 'formik';
+import * as React from 'react';
 import '../index.css';
 
 export interface ITextFieldProps {
@@ -49,7 +49,7 @@ const TextField = (props: ITextFieldProps) => {
                                     {...props}
                                     onChange={(e: any) => {
                                         field.onChange(e);
-                                        setCharacterCount(e.target.value.length)
+                                        setCharacterCount(e.target.value.length);
                                     }}
                                     type={props.type}
                                     disabled={props.disabled}
@@ -70,7 +70,7 @@ const TextField = (props: ITextFieldProps) => {
                             </div>
                         </div>
                     </span>
-                    {props.postfix && 
+                    {props.postfix &&
                         <span className="float-left margin-top-sm">
                             {props.postfix}
                         </span>
@@ -81,4 +81,4 @@ const TextField = (props: ITextFieldProps) => {
     );
 };
 
-export default TextField
+export default TextField;

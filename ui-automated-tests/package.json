@@ -22,8 +22,8 @@
   },
   "scripts": {
     "build": "tsc",
-    "lint": "tslint --project ./",
-    "lint:fix": "tslint --project ./ --fix",
+    "lint": "tslint --config ../tslint.json --project ./",
+    "lint:fix": "tslint --config ../tslint.json --project ./ --fix",
     "test": "mocha 'src/**/*.ts' -r ts-node/register --no-timeouts --recursive "
   },
   "author": "",
