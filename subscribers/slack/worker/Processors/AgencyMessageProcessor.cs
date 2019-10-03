@@ -4,14 +4,13 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Dta.Marketplace.Subscribers.Slack.Worker.Model;
 using Dta.Marketplace.Subscribers.Slack.Worker.Services;
-using System;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Dta.Marketplace.Subscribers.Slack.Worker.Processors {
-    internal class UserMessageProcessor : AbstractMessageProcessor {
+    internal class AgencyMessageProcessor : AbstractMessageProcessor {
         private readonly ISlackService _slackService;
 
-        public UserMessageProcessor(ILogger<AppService> logger, IOptions<AppConfig> config, ISlackService slackService) : base(logger, config) {
+        public AgencyMessageProcessor(ILogger<AppService> logger, IOptions<AppConfig> config, ISlackService slackService) : base(logger, config) {
             _slackService = slackService;
         }
 
@@ -19,24 +18,22 @@ namespace Dta.Marketplace.Subscribers.Slack.Worker.Processors {
             switch (awsSnsMessage.MessageAttributes.EventType.Value) {
                 case "created":
                     var definition = new {
-                        user = new {
-                            email_address = "",
-                            role = "",
-                            name = ""
+                        agency = new {
+                            id = default(int),
+                            name = "",
+                            domains = ""
                         }
                     };
                     var message = JsonConvert.DeserializeAnonymousType(awsSnsMessage.Message, definition);
-                    if (message.user.role == "buyer") {
-                        var slackMessage =
-$@"*A new buyer has signed up*
-Name: {message.user.name}
-Email: {message.user.email_address}";
+                    
+                    var slackMessage =
+$@":rotating_light:*A new agency was created*:rotating_light:
+id: {message.agency.id}
+name: {message.agency.name}
+domains: {message.agency.domains}
+Please update this record accordingly";
 
-                        return await _slackService.SendSlackMessage(_config.Value.UserSlackUrl, slackMessage);
-                    } else {
-                        _logger.LogDebug("Supplier not supported for {@AwsSnsMessage}.", awsSnsMessage);
-                    }
-                    break;
+                    return await _slackService.SendSlackMessage(_config.Value.AgencySlackUrl, slackMessage);
                 default:
                         _logger.LogDebug("Unknown processor for {@AwsSnsMessage}.", awsSnsMessage);
                     break;
