@@ -17,3 +17,10 @@ import * as Yup from "yup";
       <Checkbox id={text('Id', 'checkboxId')} label={text('Label', 'Hello Storybook')}></Checkbox>
     )}/>
   ));
+
+  storiesOf('Checkbox', module)
+  .add('checkbox component', () => (
+    <Formik render={() => (
+      <Checkbox id={text('Id', 'checkboxId')} label={text('Label', 'Hello Storybook')}></Checkbox>
+    )}/>
+  ));
