@@ -23,10 +23,3 @@ storiesOf('Button', module)
       </span>
     </Button>
   ));
-
-  storiesOf('Checkbox', module)
-  .add('checkbox component', () => (
-    <Formik render={() => (
-      <Checkbox id={text('Id', 'checkboxId')} label={text('Label', 'Hello Storybook')}></Checkbox>
-    )}/>
-  ));
