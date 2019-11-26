@@ -1,0 +1,75 @@
+version: '3.3'
+
+services:
+
+  db:
+    image: postgres:9.6.7-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    volumes:
+      - "~/docker/dm/postgresql/data:/var/lib/postgresql/data"
+    ports:
+      - 15432:5432
+
+  redis:
+    image: redis:5.0.5-alpine
+    restart: always
+    ports:
+      - 6379:6379
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+    - REDIS_HOSTS=local:redis:6379
+    ports:
+    - "8081:8081"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - "~/docker/dm/pgadmin:/var/lib/pgadmin"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: a@b.cm
+      PGADMIN_DEFAULT_PASSWORD: 1234
+      
+  localstack:
+    image: localstack/localstack:0.9.0
+    restart: always
+    ports:
+      - "4567-4583:4567-4583"
+      - "9000:8080"
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - DATA_DIR=/tmp/localstack/data
+      - LAMBDA_EXECUTOR=local
+    volumes:
+      - "~/docker/dm/localstack/data:/tmp/localstack/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  admin:
+    build:
+      context: ../dto-digitalmarketplace-admin-frontend
+      dockerfile: ../digitalmarketplace/dockerfiles/admin
+    ports:
+      - 2000:5000
+    volumes:
+      - ../dto-digitalmarketplace-admin-frontend:/app
+    restart: always
+
+  api:
+    build:
+      context: ../dto-digitalmarketplace-api
+      dockerfile: ../digitalmarketplace/dockerfiles/api
+    ports:
+      - 2001:5000
+    volumes:
+      - ../dto-digitalmarketplace-api:/app
+    restart: always
