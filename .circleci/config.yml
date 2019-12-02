@@ -29,7 +29,7 @@ commands:
         type: string
     steps:
       - run:
-          command: id
+          command: id 
       - run: 
           name: Dotnet test
           command: |
