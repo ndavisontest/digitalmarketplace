@@ -28,6 +28,8 @@ commands:
       path:
         type: string
     steps:
+      - run:
+          command: id 
       - run: 
           name: Dotnet test
           command: |
